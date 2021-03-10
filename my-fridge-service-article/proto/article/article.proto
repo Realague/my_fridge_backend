@@ -1,6 +1,8 @@
 // my_fridge_backend/my-fridge-service-article/proto/article.proto
 syntax = "proto3";
 
+option go_package = "github.com/realague/my_fridge_backend/my-fridge-service-article;my_fridge_service_article";
+
 package article; 
 
 service ArticleService {
