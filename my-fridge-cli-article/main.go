@@ -8,13 +8,14 @@ import (
 
 	"context"
 
-	pb "github.com/realague/my-fridge-service-article/proto/article"
+	pb "github.com/realague/my_fridge_backend/my-fridge-service-article/proto/article"
+
 	"google.golang.org/grpc"
 )
 
 const (
 	address         = "localhost:50051"
-	defaultFilename = "consignment.json"
+	defaultFilename = "article.json"
 )
 
 func parseFile(file string) (*pb.Article, error) {

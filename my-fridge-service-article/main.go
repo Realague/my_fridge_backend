@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	// Import the generated protobuf code
-	pb "github.com/realague/my-fridge-service-article/proto/article"
+	pb "github.com/realague/my_fridge_backend/my-fridge-service-article/proto/article"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -42,6 +42,7 @@ func (repo *Repository) Create(article *pb.Article) (*pb.Article, error) {
 // to give you a better idea.
 type service struct {
 	repo repository
+	pb.UnimplementedArticleServiceServer
 }
 
 // CreateConsignment - we created just one method on our service,
@@ -74,7 +75,7 @@ func main() {
 	// Register our service with the gRPC server, this will tie our
 	// implementation into the auto-generated interface code for our
 	// protobuf definition.
-	pb.RegisterArticleServiceServer(s, &service{repo})
+	pb.RegisterArticleServiceServer(s, &service{repo, pb.UnimplementedArticleServiceServer{}})
 
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
