@@ -7,6 +7,8 @@ package article;
 
 service ArticleService {
   rpc CreateArticle(Article) returns (Response) {}
+
+  rpc GetArticles(GetRequest) returns (Response) {}
 }
 
 message Article {
@@ -19,4 +21,8 @@ message Article {
 message Response {
   bool created = 1;
   Article article = 2;
+
+  repeated Article articles = 3;
 }
+
+message GetRequest {}

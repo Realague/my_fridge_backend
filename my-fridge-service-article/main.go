@@ -18,6 +18,7 @@ const (
 
 type repository interface {
 	Create(*pb.Article) (*pb.Article, error)
+	GetAll() []*pb.Article
 }
 
 // Repository - Dummy repository, this simulates the use of a datastore
@@ -34,6 +35,10 @@ func (repo *Repository) Create(article *pb.Article) (*pb.Article, error) {
 	repo.articles = updated
 	repo.mu.Unlock()
 	return article, nil
+}
+
+func (repo *Repository) GetAll() []*pb.Article {
+	return repo.Article
 }
 
 // Service should implement all of the methods to satisfy the service
@@ -59,6 +64,12 @@ func (s *service) CreateArticle(ctx context.Context, req *pb.Article) (*pb.Respo
 	// Return matching the `Response` message we created in our
 	// protobuf definition.
 	return &pb.Response{Created: true, Article: article}, nil
+}
+
+// GetConsignments -
+func (s *service) GetConsignments(ctx context.Context, req *pb.GetRequest) (*pb.Response, error) {
+	articles := s.repo.GetAll()
+	return &pb.Response{Articles: articles}, nil
 }
 
 func main() {
