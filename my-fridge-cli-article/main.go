@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	address         = "localhost:50051"
+	address         = "localhost:8080"
 	defaultFilename = "article.json"
 )
 
@@ -24,7 +24,7 @@ func parseFile(file string) (*pb.Article, error) {
 	if err != nil {
 		return nil, err
 	}
-	json.Unmarshal(data, &article)
+	_ = json.Unmarshal(data, &article)
 	return article, err
 }
 
@@ -53,5 +53,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not greet: %v", err)
 	}
-	log.Printf("Created: %t %t", r.Created, r.Article)
+	log.Printf("Created: %t", r.Created)
+	getAll, err := client.GetArticles(context.Background(), &pb.GetRequest{})
+	if err != nil {
+		log.Fatalf("Could not list articles: %v", err)
+	}
+	for _, v := range getAll.Articles {
+		log.Println(v)
+	}
 }
