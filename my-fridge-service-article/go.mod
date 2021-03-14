@@ -4,6 +4,9 @@ go 1.16
 
 //replace github.com/realague/my_fridge_backend/my-fridge-service-article => ../my-fridge-service-article
 
+replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
+replace github.com/lucas-clemente/quic-go => github.com/lucas-clemente/quic-go v0.14.1
+
 require (
 	github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403 // indirect
 	github.com/golang/protobuf v1.4.3

@@ -5,7 +5,6 @@ import (
 	"github.com/micro/go-micro"
 	"log"
 
-	"github.com/micro/go-micro/v2"
 	// Import the generated protobuf code
 	pb "github.com/realague/my_fridge_backend/my-fridge-service-article/proto/article"
 )
@@ -43,23 +42,25 @@ type articleService struct {
 // CreateConsignment - we created just one method on our service,
 // which is a create method, which takes a context and a request as an
 // argument, these are handled by the gRPC server.
-func (s *articleService) CreateArticle(ctx context.Context, req *pb.Article) (*pb.Response, error) {
-
-	// Save our consignment
+func (s *articleService) CreateArticle(ctx context.Context, req *pb.Article, res *pb.Response) error {
+	// Save our article
 	article, err := s.repo.Create(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Return matching the `Response` message we created in our
 	// protobuf definition.
-	return &pb.Response{Created: true, Article: article}, nil
+	res.Created = true
+	res.Article = article
+	return nil
 }
 
 // GetArticles -
-func (s *articleService) GetArticles(ctx context.Context, req *pb.GetRequest) (*pb.Response, error) {
+func (s *articleService) GetArticles(ctx context.Context, req *pb.GetRequest, res *pb.Response) error {
 	articles := s.repo.GetAll()
-	return &pb.Response{Articles: articles}, nil
+	res.Articles = articles
+	return nil
 }
 
 func main() {
