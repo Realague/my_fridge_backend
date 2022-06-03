@@ -10,7 +10,7 @@ before_install:
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
 script:
-  - docker build -t $DOCKER_REPO .
+  - docker build -t $DOCKER_REPO ./services/article
 deploy:
   provider: script
   script: bash docker_push.sh
