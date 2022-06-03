@@ -1,0 +1,18 @@
+sudo: required
+language: python
+services:
+  - docker
+env:
+  global:
+    - DOCKER_REPO=my_fridge_backend/article
+    - EB_REGION="eu-west-1"
+before_install:
+  - pip install awscli
+  - export PATH=$PATH:$HOME/.local/bin
+script:
+  - docker build -t $DOCKER_REPO .
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    all_branches: true
