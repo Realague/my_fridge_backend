@@ -2,10 +2,10 @@
 
 # AWS registry uri
 REGISTRY_URL=public.ecr.aws/p6l5e0y8/my_fridge_backend/services
-# this is most likely namespaced repo name like myorg/veryimportantimage
 SOURCE_IMAGE="${DOCKER_REPO}"
 # using it as there will be 2 versions published
-TARGET_IMAGE="${REGISTRY_URL}/${DOCKER_REPO}"
+TARGET_IMAGE="${REGISTRY_URL}"
+#${DOCKER_REPO}
 # lets make sure we always have access to latest image
 TARGET_IMAGE_LATEST="${TARGET_IMAGE}:latest"
 TIMESTAMP=$(date '+%Y%m%d%H%M%S')
@@ -16,21 +16,14 @@ VERSION="${TIMESTAMP}-${TRAVIS_COMMIT}"
 # in additional commands like deployment of new Elasticbeanstalk version
 TARGET_IMAGE_VERSIONED="${TARGET_IMAGE}:${VERSION}"
 
-# making sure correct region is set
-aws configure set default.region ${EB_REGION}
-
 # Push image to ECR
 ###################
-
-# I'm speculating it obtains temporary access token
-# it expects aws access key and secret set
-# in environmental vars
-$(aws ecr get-login --no-include-email)
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p6l5e0y8
 
 # update latest version
-docker tag ${SOURCE_IMAGE} ${TARGET_IMAGE_LATEST}
-docker push ${TARGET_IMAGE_LATEST}
+docker tag ${SOURCE_IMAGE} "${REGISTRY_URL}:latest"
+docker push "${REGISTRY_URL}:latest"
 
 # push new version
-docker tag ${SOURCE_IMAGE} ${TARGET_IMAGE_VERSIONED}
-docker push ${TARGET_IMAGE_VERSIONED}
+#docker tag ${SOURCE_IMAGE} ${TARGET_IMAGE_VERSIONED}
+#docker push ${TARGET_IMAGE_VERSIONED}

@@ -4,8 +4,8 @@ services:
   - docker
 env:
   global:
-    - DOCKER_REPO=my_fridge_backend/article
-    - EB_REGION="eu-west-1"
+    - DOCKER_REPO=article
+    - EB_REGION="us-east-1"
 before_install:
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
