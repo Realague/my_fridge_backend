@@ -1,0 +1,20 @@
+language: python
+dist: xenial
+os: linux
+services:
+  - docker
+env:
+  global:
+    - IMAGE_NAME=article-service
+    - EB_REGION="us-east-1"
+before_install:
+  - pip install awscli
+  - export PATH=$PATH:$HOME/.local/bin
+script:
+  - docker build -t $IMAGE_NAME ./services/article
+deploy:
+  provider: script
+  script: bash ./travis-scripts/docker_push.sh
+  on:
+    all_branches: true
+    condition:  $TRAVIS_BRANCH IN (master, develop)
