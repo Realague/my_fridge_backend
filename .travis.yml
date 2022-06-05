@@ -1,5 +1,6 @@
-sudo: required
 language: python
+dist: xenial
+os: linux
 services:
   - docker
 env:
@@ -16,4 +17,4 @@ deploy:
   script: bash ./travis-scripts/docker_push.sh
   on:
     all_branches: true
-    condition: (branch = master AND tag IS present) OR branch = feature/article-service
+    condition:  $TRAVIS_BRANCH IN (master, develop)
