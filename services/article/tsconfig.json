@@ -3,7 +3,9 @@
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,
-    "lib": ["es6"]
+    "outDir": "./build",
+    "lib": ["es6"],
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules"

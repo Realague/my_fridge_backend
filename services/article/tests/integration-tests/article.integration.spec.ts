@@ -1,20 +1,15 @@
-/*import * as express from 'express';
-import MongoMemoryServer from "mongodb-memory-server-core/lib/MongoMemoryServer";
+import * as express from "express";
 
-const mongoMemoryServer = require('mongodb-memory-server');
+import IntegrationHelper from "../helpers/integration-helper";
+
 const mongoose = require('mongoose');
 const request = require("supertest");
-
-const appFunction = require("./app");
 
 describe("Article Service", () => {
     let app: express.Application;
 
     beforeAll(async () => {
-        const mongoServer: MongoMemoryServer = await mongoMemoryServer.MongoMemoryServer.create();
-        await mongoose.connect(mongoServer.getUri(), {dbName: "unitTest"}).then(() => {
-            app = appFunction();
-        });
+        app = await IntegrationHelper.getApp();
     });
 
     afterAll(async () => {
@@ -33,4 +28,4 @@ describe("Article Service", () => {
 
         expect(response.status).toBe(201);
     });
-});*/
+});
